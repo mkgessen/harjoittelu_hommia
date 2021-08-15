@@ -1,1 +1,3 @@
-# harjoittelu_hommia
+# Harjoittelu hommia
+
+Python-harjoituksia
