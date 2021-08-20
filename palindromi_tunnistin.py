@@ -18,12 +18,12 @@ foo = 0
 # else:
 #     print("Eihän ole")
 #
-pituus = len(syote)
 
-
-
-on_palindromi = True
-print(syote[-3:])
+kaannetty_syote = syote[::-1]
+if kaannetty_syote == syote:
+    print("On palindromi")
+else:
+    print("Eihän ole")
 
 """
 Tämä on ihan kamala tapa testata onko palindromi, mutta voi auttaa silmukoiden ja 
@@ -39,6 +39,8 @@ pituus = len(syote) --> pituus = 4
 ---------------------------------
 """
 
+# pituus = len(syote)
+# on_palindromi = True
 # for indeksi in range(int(len(syote) / 2)):
 #
 #     # Indeksi = 0:  syote[0]->O    pituus-indeksi-1 = 4-0-1 = 3, syote[3]->O
