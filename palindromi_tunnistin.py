@@ -20,7 +20,7 @@ foo = 0
 #
 
 kaannetty_syote = syote[::-1]
-if kaannetty_syote == syote:
+if syote == kaannetty_syote:
     print("On palindromi")
 else:
     print("Eihän ole")
