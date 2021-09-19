@@ -1,8 +1,8 @@
-# Miten tehdä pallo joka pomppaa?
+# Miten tehdä pallo_vihrea joka pomppaa?
 import pygame
 
 pygame.init()
-
+clock = pygame.time.Clock()
 sininen = (0, 0, 255)
 punainen = (255, 0, 0)
 vihrea = (0, 255, 0)
@@ -19,43 +19,46 @@ x = 100 # x aloituspaikka (keskellä)
 y = 0 # y aloituspaikka (ruudun yläreuna)
 sade = 20  # pallon säde
 
-painovoima_kiihtyvyys = 90.81
-massa = 1 # kilogrammoina
-voima = massa * painovoima_kiihtyvyys
-
+kiihtyvyys = 10.0
 
 aika = 0.0 # kuinka paljon aikaa pelin alusta on kulunut
-kierros_aika = 0.05 # kuinka kauan yksi kierros kestää? tämä on viive silmukan lopussa. pygame.time.wait()
+fps = 30.0
+kierros_aika = 1.0/fps # kuinka kauan yksi kierros kestää? tämä on viive silmukan lopussa. pygame.time.wait()
 suunta = 1
 nopeus = 0.0
-vapaa_pudotus = True
 matka = 0.0
+nollattu = True
+
 while peli_kaynnissa:
 
     # pyyhitään edellinen ympyrä
-    pygame.draw.circle(screen, musta, (x, y), sade)
+    screen.fill(musta)
 
     # Ikkuna suljettu?
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             peli_kaynnissa = False
 
+    nopeuden_muutos = kiihtyvyys * kierros_aika
+    if suunta == 1:
+        nopeus = nopeus + nopeuden_muutos
+    else:
+        nopeus = nopeus - nopeuden_muutos
+    matka = nopeus * aika * suunta
 
-    nopeuden_muutos = painovoima_kiihtyvyys * kierros_aika * suunta
-    nopeus = nopeus + nopeuden_muutos
-
-    paikan_muutos = nopeus * kierros_aika * suunta
-
-    y += paikan_muutos
-    if y > 1000-sade or y < 0:
+    y += matka
+    if y > 1000-sade and nollattu:
         suunta = suunta * -1
+        nopeus = nopeus * 0.8
+        nollattu = False
     else:
         pygame.draw.circle(screen, vihrea, (x, y), sade)
+        nollattu = True
 
     aika += kierros_aika
-    print(f"aika: {aika:.2f}, matkan muutos {paikan_muutos:.2f}, paikka {y:.2f}, nopeus {nopeus:.2f}")
+    print(f"suunta: {suunta:.2f}, matkan muutos {matka:.2f}, paikka {y:.2f}, nopeus {nopeus:.2f}, dv {nopeuden_muutos:.2f}")
 
-    pygame.time.wait(int(kierros_aika*1000))
     pygame.display.flip()
+    clock.tick(fps)
 
 pygame.quit()

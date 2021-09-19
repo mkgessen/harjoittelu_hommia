@@ -1,4 +1,5 @@
 # Miten tehdä pallo_vihrea joka putoaa ruudun läpi?
+# Tällä kertaa pallo_vihrea on piirrettynä omalle 'pinnalle' (Surface) ja se saadaan näkyviin screen.blit-komennolla
 import pygame
 
 pygame.init()
@@ -20,36 +21,39 @@ x = 100 # x aloituspaikka (keskellä)
 y = 0 # y aloituspaikka (ruudun yläreuna)
 sade = 20  # pallon säde
 
-painovoima_kiihtyvyys = 9.81
+kiihtyvyys = 10.0
 
 aika = 0.0 # kuinka paljon aikaa pelin alusta on kulunut
 nopeus = 0.0
-fps = 20.0
-kierros_aika = 1.0 / fps # kuinka kauan yksi kierros kestää? tämä on viive silmukan lopussa. pygame.time.wait()
+fps = 30.0
+kierros_aika = 1 / fps # kuinka kauan yksi kierros kestää?
+
+pinta = pygame.Surface((50, 50))
+pinta.fill(musta)
+pygame.draw.circle(pinta, vihrea, (25, 25), sade)
 
 while peli_kaynnissa:
-
-    # pyyhitään edellinen ympyrä
-    screen.fill(musta)
-
     # Ikkuna suljettu?
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             peli_kaynnissa = False
 
-    nopeuden_muutos = painovoima_kiihtyvyys * kierros_aika
+    nopeuden_muutos = kiihtyvyys * kierros_aika
     nopeus = nopeus + nopeuden_muutos
 
     matka = nopeus * aika
 
     y += matka
 
-    pygame.draw.circle(screen, vihrea, (x, y), sade)
+    screen.blit(pinta, (x, y))
+    pygame.display.flip()
     print(f"aika: {aika:.2f}, pudottu matka {matka:.2f}, paikka {y:.2f}")
 
     aika += kierros_aika
 
-    pygame.display.flip()
+
     clock.tick(fps)
+    screen.fill(musta)
+
 
 pygame.quit()

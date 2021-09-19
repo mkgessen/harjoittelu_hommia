@@ -62,18 +62,17 @@ while peli_kaynnissa:
             peli_kaynnissa = False
 
     if paikka_muuttunut:
+        screen.fill(musta)
         print(f"paikkani on {x, y}")
         # piirrä ympyrä
         pygame.draw.circle(screen, vihrea, (x, y), sade)
+        # Flip the display
+        pygame.display.flip()
 
         # mitä eri tapoja on päästä eroon edellisestä ympyrästä?
-        
         paikka_muuttunut = False
 
 
-
-    # Flip the display
-    pygame.display.flip()
 
 # Done! Time to quit.
 pygame.quit()

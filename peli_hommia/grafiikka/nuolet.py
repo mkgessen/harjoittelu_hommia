@@ -2,7 +2,7 @@
 
 
 import pygame
-from pygame.constants import K_UP, K_DOWN, K_LEFT, K_RIGHT, QUIT, K_ESCAPE
+from pygame.constants import K_UP, K_DOWN, K_LEFT, K_RIGHT, QUIT, K_ESCAPE, K_a
 pygame.init()
 screen = pygame.display.set_mode([1000, 1000])
 
@@ -26,7 +26,7 @@ while peli_kaynnissa:
         # ollaan kiinnostuneita vain nuolista ja ESC:stä. Mikään muu näppäin ei tee tässä pelissä mitään
         if event.type == pygame.KEYDOWN:
 
-            if event.key == K_UP:
+            if event.key == K_a or event.key == K_UP:
                 # painettu nuolta ylös
                 y = y + 1
                 paikka_muuttunut = True
